@@ -31,6 +31,14 @@ public class ArticleDAO {
         realm.commitTransaction();
     }
 
+    public void setReadStatus(int id, boolean articleReaded) {
+        Realm realm = dbHelper.getRealm();
+        realm.beginTransaction();
+        realm.where(ArticleModel.class).equalTo("id", id).findFirst().setReadStatus(articleReaded);
+        realm.commitTransaction();
+        realm.close();
+    }
+
     public List<ArticleModel> getArticles() {
         return dbHelper.getRealm().where(ArticleModel.class).findAll();
     }

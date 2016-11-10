@@ -2,6 +2,10 @@ package ckl.lfspersson.ckl;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -10,7 +14,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by LFSPersson on 09/11/16.
  */
 
-public class ArticleModel extends RealmObject{
+public class ArticleModel extends RealmObject {
 
     @PrimaryKey
     private int id;
@@ -24,8 +28,9 @@ public class ArticleModel extends RealmObject{
     private String date;
     @SerializedName("content")
     private String content;
-    //tags
-    //image
+    @SerializedName("tags")
+    private RealmList<ArticleTagModel> articleTag;
+    private Boolean readStatus;
 
     public ArticleModel() {
     }
@@ -77,4 +82,21 @@ public class ArticleModel extends RealmObject{
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public RealmList<ArticleTagModel> getTag() {
+        return articleTag;
+    }
+
+    public void setTag(RealmList<ArticleTagModel> articleTag) {
+        this.articleTag = articleTag;
+    }
+
+    public Boolean getReadStatus() {
+        return readStatus;
+    }
+
+    public void setReadStatus(Boolean readStatus) {
+        this.readStatus = readStatus;
+    }
+
 }

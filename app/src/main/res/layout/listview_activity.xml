@@ -7,9 +7,9 @@
     android:padding="7dp">
 
     <ImageView
-        android:id="@+id/listview_image"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
+        android:id="@+id/ivImage"
+        android:layout_width="75dp"
+        android:layout_height="95dp"
         android:contentDescription="@string/app_name"
         android:padding="10dp" />
 
@@ -20,24 +20,33 @@
         android:padding="7dp">
 
         <TextView
-            android:id="@+id/listview_item_title"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/listview_item_date"
+            android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/listview_item_author"
+            android:id="@+id/tvAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvReadStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+
     </LinearLayout>
 </LinearLayout>

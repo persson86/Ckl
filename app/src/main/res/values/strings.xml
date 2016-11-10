@@ -3,4 +3,7 @@
     <string name="msg_getting_articles">Getting Articles!</string>
     <string name="msg_wait">Wait...</string>
     <string name="log_error">ckl_error</string>
+    <string name="txt_label">Label: </string>
+    <string name="txt_read_true">This article was already read</string>
+    <string name="msg_no_internet">Internet connection required. Check your connection</string>
 </resources>
