@@ -8,24 +8,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit.Call;
@@ -34,29 +30,29 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     public List<ArticleModel> articleModel;
     private ProgressDialog progressDialog;
-
-    @ViewById
-    ListView listView;
+    private ArticleViewAdapter articleViewAdapter;
 
     @Bean
     ArticleDAO articleDAO;
     @Bean
     DatabaseHelper dbHelper;
+    @ViewById
+    GridView gvArticles;
 
     @AfterViews
     void init() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         startDialog();
+        onClickManager();
 
         if (isConnectedToInternet() == true)
             callRestService();
-        else
-            if (articleDAO.getArticles().size() > 0)
-                listManager();
+        else if (articleDAO.getArticles().size() > 0)
+            listManager();
     }
 
     @Override
@@ -114,48 +110,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void startDialog() {
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage(getResources().getString(R.string.msg_getting_articles));
-        progressDialog.setTitle(getResources().getString(R.string.msg_wait));
-        progressDialog.show();
-    }
-
-    private void listManager() {
-        int[] listviewImage = new int[]{
-                R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4,
-                R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4
-        };
-
-        final List<HashMap<String, String>> contentList = new ArrayList<>();
-        List<ArticleModel> articleModelList = articleDAO.getArticles();
-
-        int index = 0;
-        for (ArticleModel model : articleModelList) {
-            HashMap<String, String> hm = new HashMap<>();
-            hm.put("title", model.getTitle());
-            hm.put("date", model.getDate());
-            hm.put("author", model.getAuthors());
-            hm.put("image", Integer.toString(listviewImage[index]));
-            if (model.getReadStatus() == true)
-                hm.put("readStatus", getString(R.string.txt_read_true));
-
-            contentList.add(hm);
-            index++;
-        }
-
-        String[] from = {"image", "title", "date", "author", "readStatus"};
-        int[] to = {R.id.ivImage, R.id.tvTitle, R.id.tvDate, R.id.tvAuthor, R.id.tvReadStatus};
-
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), contentList, R.layout.listview_activity, from, to);
-        listView.setAdapter(simpleAdapter);
-        progressDialog.dismiss();
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void onClickManager(){
+        gvArticles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int idArticle = position + 1;
-
                 articleDAO.setReadStatus(idArticle, true);
 
                 Intent it;
@@ -166,19 +125,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
     }
 
-    private boolean isConnectedToInternet()
-    {
+    private void startDialog() {
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage(getResources().getString(R.string.msg_getting_articles));
+        progressDialog.setTitle(getResources().getString(R.string.msg_wait));
+        progressDialog.show();
+    }
+
+    private void listManager() {
+        List<ArticleModel> articleModelList = articleDAO.getArticles();
+        articleViewAdapter = new ArticleViewAdapter(this, articleModelList);
+        articleViewAdapter.notifyDataSetChanged();
+        gvArticles.setAdapter(articleViewAdapter);
+        progressDialog.dismiss();
+    }
+
+    private boolean isConnectedToInternet() {
         ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork == null) {
             Toast.makeText(MainActivity.this, R.string.msg_no_internet, Toast.LENGTH_LONG).show();
             return false;
-        }
-        else
+        } else
             return true;
     }
-
 }
