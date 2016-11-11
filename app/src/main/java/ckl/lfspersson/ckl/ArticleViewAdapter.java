@@ -81,10 +81,10 @@ public class ArticleViewAdapter extends BaseAdapter {
                 ivImage.setImageResource(R.drawable.a4);
                 break;
             case 4:
-                ivImage.setImageResource(R.drawable.a1);
+                ivImage.setImageResource(R.drawable.a5);
                 break;
             case 5:
-                ivImage.setImageResource(R.drawable.a2);
+                ivImage.setImageResource(R.drawable.a6);
                 break;
         }
 

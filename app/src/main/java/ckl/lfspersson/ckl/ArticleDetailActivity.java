@@ -14,7 +14,7 @@ import org.androidannotations.annotations.ViewById;
 import io.realm.RealmList;
 
 @EActivity(R.layout.activity_article_detail)
-public class ArticleDetail extends AppCompatActivity {
+public class ArticleDetailActivity extends AppCompatActivity {
 
     public int idArticle;
 
@@ -68,10 +68,10 @@ public class ArticleDetail extends AppCompatActivity {
                 ivImage.setImageResource(R.drawable.a4);
                 break;
             case 5:
-                ivImage.setImageResource(R.drawable.a1);
+                ivImage.setImageResource(R.drawable.a5);
                 break;
             case 6:
-                ivImage.setImageResource(R.drawable.a2);
+                ivImage.setImageResource(R.drawable.a6);
                 break;
         }
     }

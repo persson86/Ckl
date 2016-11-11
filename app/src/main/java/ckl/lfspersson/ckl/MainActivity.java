@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if (ArticleDetail.returnFromDetail == true) {
+        if (ArticleDetailActivity.returnFromDetail == true) {
             listManager();
-            ArticleDetail.returnFromDetail = false;
+            ArticleDetailActivity.returnFromDetail = false;
         }
     }
 
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity{
                 articleDAO.setReadStatus(idArticle, true);
 
                 Intent it;
-                it = new Intent(getApplicationContext(), ArticleDetail_.class);
+                it = new Intent(getApplicationContext(), ArticleDetailActivity_.class);
                 Bundle b = new Bundle();
                 b.putInt("idArticle", idArticle);
                 it.putExtras(b);

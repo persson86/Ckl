@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ckl</string>
+    <string name="app_name">Ckl Challenge</string>
     <string name="msg_getting_articles">Getting Articles!</string>
     <string name="msg_wait">Wait...</string>
     <string name="log_error">ckl_error</string>
