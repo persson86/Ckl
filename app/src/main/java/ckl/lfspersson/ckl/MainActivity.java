@@ -34,6 +34,8 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity{
 
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity{
     RadioButton rbTitle;
     @ViewById
     RadioButton rbWebsite;
+
+    ExpandableRelativeLayout expandableLayout1;
 
     @AfterViews
     void init() {
@@ -197,5 +201,10 @@ public class MainActivity extends AppCompatActivity{
             return false;
         } else
             return true;
+    }
+
+    public void expandableButton1(View view) {
+        expandableLayout1 = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout1);
+        expandableLayout1.toggle(); // toggle expand and collapse
     }
 }
