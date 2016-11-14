@@ -32,7 +32,7 @@ import retrofit.Retrofit;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity{
 
-    public List<ArticleModel> articleModel;
+    public List<ArticleModel> articleModelList;
     private ProgressDialog progressDialog;
     private ArticleViewAdapter articleViewAdapter;
 
@@ -72,21 +72,21 @@ public class MainActivity extends AppCompatActivity{
         call.enqueue(new Callback<List<ArticleModel>>() {
             @Override
             public void onResponse(Response<List<ArticleModel>> response, Retrofit retrofit) {
-                articleModel = new ArrayList<>();
-                articleModel = response.body();
+                articleModelList = new ArrayList<>();
+                articleModelList = response.body();
 
                 int count = 0;
                 List<ArticleModel> modelArticleList = new ArrayList<ArticleModel>();
-                for (int i = 0; i < articleModel.size(); i++) {
+                for (int i = 0; i < articleModelList.size(); i++) {
                     ArticleModel model = new ArticleModel();
                     count++;
                     model.setId(count);
-                    model.setTitle(articleModel.get(i).getTitle());
-                    model.setAuthors(articleModel.get(i).getAuthors());
-                    model.setContent(articleModel.get(i).getContent());
-                    model.setDate(articleModel.get(i).getDate());
-                    model.setWebsite(articleModel.get(i).getWebsite());
-                    model.setTag(articleModel.get(i).getTag());
+                    model.setTitle(articleModelList.get(i).getTitle());
+                    model.setAuthors(articleModelList.get(i).getAuthors());
+                    model.setContent(articleModelList.get(i).getContent());
+                    model.setDate(articleModelList.get(i).getDate());
+                    model.setWebsite(articleModelList.get(i).getWebsite());
+                    model.setTag(articleModelList.get(i).getTag());
                     model.setReadStatus(false);
                     modelArticleList.add(model);
                 }
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity{
         gvArticles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int idArticle = position + 1;
+                int idArticle = articleModelList.get(position).getId();
                 articleDAO.setReadStatus(idArticle, true);
 
                 Intent it;
@@ -135,7 +135,9 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void listManager() {
-        List<ArticleModel> articleModelList = articleDAO.getArticles();
+        articleModelList = new ArrayList<>();
+        articleModelList = articleDAO.getArticlesOrderByFilter("date");
+
         articleViewAdapter = new ArticleViewAdapter(this, articleModelList);
         articleViewAdapter.notifyDataSetChanged();
         gvArticles.setAdapter(articleViewAdapter);

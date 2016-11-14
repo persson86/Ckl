@@ -9,6 +9,7 @@ import org.androidannotations.annotations.RootContext;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by LFSPersson on 10/11/16.
@@ -45,6 +46,10 @@ public class ArticleDAO {
 
     public ArticleModel getArticlebyId(long id) {
         return dbHelper.getRealm().where(ArticleModel.class).equalTo("id", id).findFirst();
+    }
+
+    public List<ArticleModel> getArticlesOrderByFilter(String filter){
+        return dbHelper.getRealm().where(ArticleModel.class).findAllSorted(filter);
     }
 
 }
