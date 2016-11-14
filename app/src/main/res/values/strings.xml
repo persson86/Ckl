@@ -6,4 +6,9 @@
     <string name="txt_label">Label: </string>
     <string name="txt_read_true">This article was already read</string>
     <string name="msg_no_internet">Internet connection required. Check your connection</string>
+    <string name="txt_date">Date</string>
+    <string name="txt_author">Author</string>
+    <string name="txt_title">Title</string>
+    <string name="txt_wbsite">Website</string>
+    <string name="txt_tag">Tag</string>
 </resources>

@@ -50,6 +50,7 @@ public class ArticleViewAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.custom_item, null);
         }
 
+        int articleId = articles.get(position).getId();
         int color = Color.parseColor("#ffffff");
         convertView.setBackgroundColor(color);
 
@@ -67,23 +68,23 @@ public class ArticleViewAdapter extends BaseAdapter {
         else
             tvRead.setText(null);
 
-        switch (position) {
-            case 0:
+        switch (articleId) {
+            case 1:
                 ivImage.setImageResource(R.drawable.a1);
                 break;
-            case 1:
+            case 2:
                 ivImage.setImageResource(R.drawable.a2);
                 break;
-            case 2:
+            case 3:
                 ivImage.setImageResource(R.drawable.a3);
                 break;
-            case 3:
+            case 4:
                 ivImage.setImageResource(R.drawable.a4);
                 break;
-            case 4:
+            case 5:
                 ivImage.setImageResource(R.drawable.a5);
                 break;
-            case 5:
+            case 6:
                 ivImage.setImageResource(R.drawable.a6);
                 break;
         }

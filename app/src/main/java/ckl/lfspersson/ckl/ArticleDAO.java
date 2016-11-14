@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by LFSPersson on 10/11/16.
@@ -49,7 +50,12 @@ public class ArticleDAO {
     }
 
     public List<ArticleModel> getArticlesOrderByFilter(String filter){
-        return dbHelper.getRealm().where(ArticleModel.class).findAllSorted(filter);
+        switch (filter){
+            case "date":
+                return dbHelper.getRealm().where(ArticleModel.class).findAllSorted(filter, Sort.DESCENDING);
+            default:
+                return dbHelper.getRealm().where(ArticleModel.class).findAllSorted(filter, Sort.ASCENDING);
+        }
     }
 
 }

@@ -4,9 +4,58 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#dfdfdf"
+    android:orientation="vertical"
     tools:context="ckl.lfspersson.ckl.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <RadioButton
+                android:id="@+id/rbDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:checked="true"
+                android:text="@string/txt_date"
+                android:textSize="16dp" />
+
+            <RadioButton
+                android:id="@+id/rbAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:checked="false"
+                android:text="@string/txt_author"
+                android:textSize="16dp" />
+
+            <RadioButton
+                android:id="@+id/rbTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:checked="false"
+                android:text="@string/txt_title"
+                android:textSize="16dp" />
+
+            <RadioButton
+                android:id="@+id/rbWebsite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:checked="false"
+                android:text="@string/txt_wbsite"
+                android:textSize="16dp" />
+        </RadioGroup>
+    </LinearLayout>
 
     <GridView
         android:id="@+id/gvArticles"

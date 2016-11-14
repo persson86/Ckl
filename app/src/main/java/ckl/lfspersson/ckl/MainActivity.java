@@ -12,13 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -32,9 +37,9 @@ import retrofit.Retrofit;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity{
 
-    public List<ArticleModel> articleModelList;
+    private List<ArticleModel> articleModelList;
     private ProgressDialog progressDialog;
-    private ArticleViewAdapter articleViewAdapter;
+    private String filter;
 
     @Bean
     ArticleDAO articleDAO;
@@ -42,24 +47,32 @@ public class MainActivity extends AppCompatActivity{
     DatabaseHelper dbHelper;
     @ViewById
     GridView gvArticles;
+    @ViewById
+    RadioButton rbDate;
+    @ViewById
+    RadioButton rbAuthor;
+    @ViewById
+    RadioButton rbTitle;
+    @ViewById
+    RadioButton rbWebsite;
 
     @AfterViews
     void init() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         startDialog();
-        onClickManager();
+        listenerManager();
 
         if (isConnectedToInternet() == true)
             callRestService();
         else if (articleDAO.getArticles().size() > 0)
-            listManager();
+            articlesListManager();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (ArticleDetailActivity.returnFromDetail == true) {
-            listManager();
+            articlesListManager();
             ArticleDetailActivity.returnFromDetail = false;
         }
     }
@@ -94,14 +107,14 @@ public class MainActivity extends AppCompatActivity{
                 if (modelArticleList.size() != articleDAO.getArticles().size()) {
                     articleDAO.saveArticles(modelArticleList);
                 }
-                listManager();
+                articlesListManager();
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e(getString(R.string.log_error), t.toString());
                 if (articleDAO.getArticles().size() > 0)
-                    listManager();
+                    articlesListManager();
                 else {
                     Toast.makeText(getApplicationContext(), t.getMessage().toString(), Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
@@ -110,7 +123,32 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    private void onClickManager(){
+    @Click
+    void rbDate(){
+        filter = "date";
+        startDialog();
+        articlesListManager();
+    }
+    @Click
+    void rbAuthor(){
+        filter = "authors";
+        startDialog();
+        articlesListManager();
+    }
+    @Click
+    void rbTitle(){
+        filter = "title";
+        startDialog();
+        articlesListManager();
+    }
+    @Click
+    void rbWebsite(){
+        filter = "website";
+        startDialog();
+        articlesListManager();
+    }
+
+    private void listenerManager(){
         gvArticles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -134,13 +172,20 @@ public class MainActivity extends AppCompatActivity{
         progressDialog.show();
     }
 
-    private void listManager() {
+    @UiThread
+    public void articlesListManager() {
+        ArticleViewAdapter articleViewAdapter;
+
+        if (filter == null)
+            filter = "date";
+
         articleModelList = new ArrayList<>();
-        articleModelList = articleDAO.getArticlesOrderByFilter("date");
+        articleModelList = articleDAO.getArticlesOrderByFilter(filter);
 
         articleViewAdapter = new ArticleViewAdapter(this, articleModelList);
         articleViewAdapter.notifyDataSetChanged();
         gvArticles.setAdapter(articleViewAdapter);
+
         progressDialog.dismiss();
     }
 
