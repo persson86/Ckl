@@ -37,7 +37,7 @@ import retrofit.Retrofit;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private List<ArticleModel> articleModelList;
     private ProgressDialog progressDialog;
@@ -130,35 +130,39 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Click
-    void rbDate(){
+    void rbDate() {
         filter = "date";
         startDialog();
         articlesListManager();
     }
+
     @Click
-    void rbAuthor(){
+    void rbAuthor() {
         filter = "authors";
         startDialog();
         articlesListManager();
     }
+
     @Click
-    void rbTitle(){
+    void rbTitle() {
         filter = "title";
         startDialog();
         articlesListManager();
     }
+
     @Click
-    void rbWebsite(){
+    void rbWebsite() {
         filter = "website";
         startDialog();
         articlesListManager();
     }
+
     @Click
-    void btSort(){
+    void btSort() {
         expandableLayout.toggle();
     }
 
-    private void listenerManager(){
+    private void listenerManager() {
         gvArticles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
