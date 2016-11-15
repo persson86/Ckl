@@ -57,8 +57,10 @@ public class MainActivity extends AppCompatActivity{
     RadioButton rbTitle;
     @ViewById
     RadioButton rbWebsite;
-
-    ExpandableRelativeLayout expandableLayout1;
+    @ViewById
+    ExpandableRelativeLayout expandableLayout;
+    @ViewById
+    Button btSort;
 
     @AfterViews
     void init() {
@@ -151,6 +153,10 @@ public class MainActivity extends AppCompatActivity{
         startDialog();
         articlesListManager();
     }
+    @Click
+    void btSort(){
+        expandableLayout.toggle();
+    }
 
     private void listenerManager(){
         gvArticles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -201,10 +207,5 @@ public class MainActivity extends AppCompatActivity{
             return false;
         } else
             return true;
-    }
-
-    public void expandableButton1(View view) {
-        expandableLayout1 = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout1);
-        expandableLayout1.toggle(); // toggle expand and collapse
     }
 }

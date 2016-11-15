@@ -23,6 +23,7 @@ public class ArticleDAO {
 
     @Bean
     DatabaseHelper dbHelper;
+
     public void saveArticles(List<ArticleModel> model) {
         Realm realm = dbHelper.getRealm();
         realm.beginTransaction();
